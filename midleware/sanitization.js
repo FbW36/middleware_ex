@@ -15,6 +15,6 @@ exports.stringsToNumbers = (req, res, next) => {
 };
 
 exports.sortBands = (req, res, next) => {
-  req.body.favoriteBands = req.body.favoriteBands.sort();
+  req.body.favoriteBands.sort();
   next();
 };
