@@ -2,13 +2,11 @@ const { capitalizeFirst } = require('../helpers/capitalizeFirst');
 
 const capitalizeNames = (req, res, next) => {
   const { firstName, lastName } = req.body;
-  const capitalizedFirst = capitalizeFirst(firstName);
-  const capitalizedLast = capitalizeFirst(lastName);
 
   req.body = {
     ...req.body,
-    firstName: capitalizedFirst,
-    lastName: capitalizedLast,
+    firstName: capitalizeFirst(firstName),
+    lastName: capitalizeFirst(lastName),
   };
   next();
 };
