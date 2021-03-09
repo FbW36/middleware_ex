@@ -2,23 +2,8 @@ const express = require('express');
 const app = express();
 const PORT = 5000;
 
-const {
-	validateProps,
-	validateAge,
-	validateFBW
-} = require('./middleware/validators');
-
-const {
-	checkProps,
-	capitalizeName,
-	sortFavBands,
-	numerizeAgeNClass
-} = require('./middleware/sanitizers');
-
-const {
-	handleSuccess,
-	outputUser
-} = require('./controllers/controllers');
+const validateRouter = require('./routers/validateRouter');
+const sanitizeRouter = require('./routers/sanitizeRouter');
 
 
 
@@ -34,9 +19,9 @@ app.get('/', (req, res) => {
 	res.send('Hello from the exercise!')
 })
 
-app.post('/validateUser', validateProps, validateAge, validateFBW, handleSuccess)
+app.use(validateRouter);
 
-app.post('/sanitizeUser', checkProps, capitalizeName, sortFavBands, numerizeAgeNClass, outputUser)
+app.use(sanitizeRouter);
 
 
 //* ERROR HANDLING
