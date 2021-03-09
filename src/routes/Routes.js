@@ -1,9 +1,11 @@
 const { successMessage } = require('../controllers/Controllers');
+
 const {
   capitalizeNames,
   sortFavoriteBands,
   toNumber,
 } = require('../middleware/sanitizeUser');
+
 const {
   validateFields,
   isAdult,
