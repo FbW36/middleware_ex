@@ -15,23 +15,17 @@ const {
 	numerizeAgeNClass
 } = require('./middleware/sanitizers');
 
+const {
+	handleSuccess,
+	outputUser
+} = require('./controllers/controllers');
+
+
 
 app.listen(PORT, () => console.log(`Listening at ${PORT}`));
 
 app.use(express.json());
 
-
-//* CONTROLLERS
-
-const handleSuccess = (req, res) => {
-	res.send({ message: "This user is valid!" })
-}
-
-const outputUser = (req, res) => {
-	console.log(req.body);
-	const user = req.body;
-	res.send(user);
-}
 
 
 //* ROUTES
