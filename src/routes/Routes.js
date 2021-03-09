@@ -1,4 +1,7 @@
-const { successMessage } = require('../controllers/Controllers');
+const {
+  successMessage,
+  successSanitization,
+} = require('../controllers/Controllers');
 
 const {
   capitalizeNames,
@@ -17,7 +20,9 @@ const routes = (app) => {
     .route('/validateUser')
     .post(validateFields, isAdult, isFBW36, successMessage);
 
-  app.route('/sanitizeUser').get(capitalizeNames, sortFavoriteBands, toNumber);
+  app
+    .route('/sanitizeUser')
+    .get(capitalizeNames, sortFavoriteBands, toNumber, successSanitization);
 };
 
 module.exports = routes;

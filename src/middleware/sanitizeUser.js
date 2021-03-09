@@ -21,7 +21,8 @@ const toNumber = (req, res, next) => {
   const { age, fbw } = req.body;
   const parsedAge = Number.parseInt(age);
   const parsedClass = Number.parseInt(fbw);
-  res.send({ ...req.body, age: parsedAge, fbw: parsedClass });
+  req.body = { ...req.body, age: parsedAge, fbw: parsedClass };
+  next();
 };
 
 module.exports = { capitalizeNames, sortFavoriteBands, toNumber };

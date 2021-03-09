@@ -3,4 +3,6 @@ const successMessage = (req, res) =>
     message: 'This user is valid!',
   });
 
-module.exports = { successMessage };
+const successSanitization = (req, res) => res.send(req.body);
+
+module.exports = { successMessage, successSanitization };
