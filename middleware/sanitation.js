@@ -5,18 +5,16 @@ exports.sanitizeUserName = (req, res, next) => {
     req.body.lastName
   );
 
-  const firstName = req.body.firstName;
-  const lastName = req.body.lastName;
+  if (
+    /^[A-Z]{1}/.test(req.body.firstName) &&
+    /^[A-Z]{1}/.test(req.body.lastName)
+  )
+    next();
 
-  if (/^[A-Z]{1}/.test(firstName) && /^[A-Z]{1}/.test(lastName)) next();
-
-  const sanitizedFirstname =
-    firstName.charAt(0).toUpperCase() + firstName.slice(1);
-  const sanitizedLastname =
-    lastName.charAt(0).toUpperCase() + lastName.slice(1);
-
-  req.body.firstName = sanitizedFirstname;
-  req.body.lastName = sanitizedLastname;
+  req.body.firstName =
+    req.body.firstName.charAt(0).toUpperCase() + req.body.firstName.slice(1);
+  req.body.lastName =
+    req.body.lastName.charAt(0).toUpperCase() + req.body.lastName.slice(1);
 
   next();
 };
