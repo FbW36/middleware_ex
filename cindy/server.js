@@ -1,17 +1,29 @@
-const express = require('express')
-const cors = require('cors')
-const app = express()
-const port = 5000
+const express = require("express");
+const cors = require("cors");
+const app = express();
+const port = 5000;
+const validateRouter = require("../cindy/routes/validateRouter");
+const sanitizeRouter = require("../cindy/routes/sanitizeRouter");
 
-app.listen(port, ()=>{
-    console.log(`app listening at http://localhost:${port}`)
-})
+app.listen(port, () => {
+  console.log(`Example app listening at http://localhost:${port}`);
+});
 
-// Express middleware
-app.use(express.json())
-app.use(cors())
+/**EXPRESS MIDDLEWARE */
+app.use(express.json());
+app.use(cors());
 
-//Available routes
-app.get("/", (req,res)=>{
-    res.send("hello world")
-})
+/**AVAILABLE ROUTES */
+app.get("/", (req, res) => {
+  res.send("Hello World!");
+});
+app.use("/validateUser", validateRouter);
+app.use("/sanitizeUser", sanitizeRouter);
+
+/**ERROR HANDLING */
+
+app.use(function errorHandler(err, req, res, next) {
+  res.status(err.status || 500).send({
+    error: { message: err.message },
+  });
+});
