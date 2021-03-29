@@ -1,16 +1,8 @@
 const express = require("express");
 const { sanitizedSuccessMessage } = require("../controllers/controllers");
-
-const {
-  capitalizeUser,
-  sortBands,
-  strToNum,
-} = require("../middleware/sanitizing");
-
 const router = express.Router();
+const { sanitizeUser } = require("../middleware/sanitizing");
 
-router
-  .route("/")
-  .post(capitalizeUser, sortBands, strToNum, sanitizedSuccessMessage);
+router.route("/").put(sanitizeUser(), sanitizedSuccessMessage);
 
 module.exports = router;

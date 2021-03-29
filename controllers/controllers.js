@@ -1,5 +1,5 @@
 exports.validateSuccessMessage = (req, res) =>
-  res.send({ message: "User successfully validated!" });
+  res.send({ message: "This user is valid!" });
 
 exports.sanitizedSuccessMessage = (req, res) =>
-  res.send(req.bodyI);
+  res.send(req.body);

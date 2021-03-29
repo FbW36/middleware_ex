@@ -4,13 +4,12 @@ const router = express.Router();
 const { validateSuccessMessage } = require("../controllers/controllers");
 
 const {
-  checkLoginData,
-  checkUsersClass,
-  checkUserAge,
+  validateUserRules,
+  validateUserErrorHandling,
 } = require("../middleware/validation");
 
 router
   .route("/")
-  .post(checkLoginData, checkUserAge, checkUsersClass, validateSuccessMessage);
+  .post(validateUserRules(), validateUserErrorHandling, validateSuccessMessage);
 
 module.exports = router;
