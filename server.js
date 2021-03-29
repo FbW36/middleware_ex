@@ -18,7 +18,6 @@ app.get("/", (req, res) => {
 });
 
 app.use("/validateUser", validateRouter);
-
 app.use("/sanitizeUser", sanitizeRouter);
 
 // ERROR HANDLING

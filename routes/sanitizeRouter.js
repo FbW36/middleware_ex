@@ -1,15 +1,14 @@
 const express = require("express");
+const { addUser } = require("../controllers/userController");
 const app = express();
 const router = express.Router();
 
-//const { addUser } = require("../controllers/userController");
 const {
   sanitizeUserName,
-  sanitizeBands,
-  sanitizeNumbers,
-} = require("../middleware/sanitation");
+  validationErrorHandling,
+} = require("../middleware/validation");
 
 //sanitizeUser
-router.route("/").post(sanitizeUserName, sanitizeBands, sanitizeNumbers);
+router.route("/").post(sanitizeUserName(), validationErrorHandling, addUser);
 
 module.exports = router;

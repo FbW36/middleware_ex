@@ -1,15 +1,14 @@
 const express = require("express");
+const { addUser } = require("../controllers/userController");
 const app = express();
 const router = express.Router();
 
-//const { addUser } = require("../controllers/userController");
 const {
-  userDataComplete,
-  validateUserAge,
-  validateFbw,
+  validateUserData,
+  validationErrorHandling,
 } = require("../middleware/validation");
 
 //ValidateUser
-router.route("/").post(userDataComplete, validateUserAge, validateFbw);
+router.route("/").post(validateUserData(), validationErrorHandling, addUser);
 
 module.exports = router;
