@@ -1,0 +1,18 @@
+{
+  "students": [
+    {
+      "firstName": "Steve",
+      "lastName": "Stevenson",
+      "age": 129,
+      "fbw": 36,
+      "profession": "Musician",
+      "favoriteBands": [
+        "Machinehead",
+        "Motorhead",
+        "Radiohead",
+        "The Talking Heads"
+      ],
+      "email": "steve@steve.com"
+    }
+  ]
+}
