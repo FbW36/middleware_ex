@@ -1,0 +1,25 @@
+{
+  "name": "middleware_ex",
+  "version": "1.0.0",
+  "description": "This is small exercise to practice writing our custom middleware.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/FbW36/middleware_ex.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/FbW36/middleware_ex/issues"
+  },
+  "homepage": "https://github.com/FbW36/middleware_ex#readme",
+  "dependencies": {
+    "express": "^4.17.1",
+    "express-validator": "^6.10.0",
+    "uuid": "^8.3.2"
+  }
+}
