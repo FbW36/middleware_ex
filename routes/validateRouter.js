@@ -2,8 +2,8 @@ const express = require('express')
 const router = express.Router()
 
 const { validateResponse} = require('../controller/userController')
-const {checkUser, validateAge, validateFbw} = require('../middleware/validateUser')
+const {validationRules, validationErrorHandling} = require('../middleware/validateUser')
 
-router.route('/').post( checkUser, validateAge, validateFbw, validateResponse)
+router.route('/').post(validationRules(), validationErrorHandling, validateResponse)
 
 module.exports = router
