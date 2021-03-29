@@ -1,16 +1,13 @@
-const express = require("express");
+const express = require('express');
 const router = express.Router();
-
-const { sanitizationResponse } = require("../controllers/usersControllers");
-
+const { sanitizationResponse } = require('../controllers/usersControllers');
 const {
-  sanitizeName,
-  stringsToNumbers,
-  sortBands,
-} = require("../middleware/sanitization");
+  userSanitizationRules,
+  userValidationErrorHandling,
+} = require('../middleware/sanitization');
 
 router
-  .route("/")
-  .post(sanitizeName, stringsToNumbers, sortBands, sanitizationResponse);
+  .route('/')
+  .post(userSanitizationRules(), userValidationErrorHandling, sanitizationResponse);
 
 module.exports = router;

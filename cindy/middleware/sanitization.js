@@ -1,21 +1,22 @@
-exports.sanitizeName = (req, res, next) => {
-    const { firstName, lastName } = req.body;
-    console.log(`We are validating the object we received`);
-    firstName = firstName.charAt(0).toUpperCase() + firstName.slice(1);
-    lastName = lastName.charAt(0).toUpperCase() + lastName.slice(1);
-    next();
-  };
+const {body, validationResult} = require('express-validator')
 
-  exports.stringsToNumbers = (req, res, next) => {
-    const { age, fbw } = req.body;
-    age = parseInt(req.body.age);
-    fbw = parseInt(req.body.fbw);
+exports.userSanitizationRules = () => {
+  return [
+    body('firstName')
+      .toLowerCase()
+      .customSanitizer((value) => value[0].toUpperCase() + value.slice(1)),
+    body('lastName')
+      .toLowerCase()
+      .customSanitizer((value) => value[0].toUpperCase() + value.slice(1)),
+    body('age').toInt(),
+    body('fbw').toInt(),
+    body('favoriteBands').customSanitizer((value) => value.sort()),
+  ];
+};
 
-    next();
-  };
-
-  exports.sortBands = (req, res, next) => {
-    const { favoriteBands } = req.body;
-    favoriteBands.sort();
-    next();
-  };
+// User sanitization Error Handling
+exports.userValidationErrorHandling = (req, res, next) => {
+  const errors = validationResult(req);
+  if (errors.isEmpty()) return next();
+  res.status(422).json({ errors: errors.array() });
+};

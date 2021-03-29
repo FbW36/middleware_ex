@@ -1,9 +1,13 @@
-const express = require("express");
+const express = require('express');
 const router = express.Router();
+const { validationResponse } = require('../controllers/usersControllers');
+const {
+  userValidationRules,
+  userValidationErrorHandling,
+} = require('../middleware/validation');
 
-const { validationResponse } = require("../controllers/usersControllers");
-const { validateKeys, isAdult, isFam } = require("../middleware/validation");
-
-router.route("/").post(validateKeys, isAdult, isFam, validationResponse);
+router
+  .route('/')
+  .post(userValidationRules(), userValidationErrorHandling, validationResponse);
 
 module.exports = router;
