@@ -2,14 +2,13 @@ const express = require('express');
 const router = express.Router();
 
 const {
-	validateProps,
-	validateAge,
-	validateFBW
+	validationErrorHandling,
+	validationRules
 } = require('../middleware/validators');
 
 const { handleSuccess } = require('../controllers/controllers');
 
 router.route('/validateUser')
-	.post(validateProps, validateAge, validateFBW, handleSuccess)
+	.post(validationRules(), 	validationErrorHandling, handleSuccess)
 
 module.exports = router;

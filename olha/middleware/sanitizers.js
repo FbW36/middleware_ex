@@ -1,34 +1,41 @@
-exports.checkProps = (req, res, next) => {
-	const user = req.body;
+const { body, validationResult } = require('express-validator');
 
-	if (user.firstName && user.lastName && user.favoriteBands && user.favoriteBands.length && user.age && user.fbw) next();
-	else {
-		const error = new Error('Cannot sanitize! Your user is incomplete!');
-		error.status = 400;
-		next(error);
-	}
+const capitalize = (string) => string[0].toUpperCase() + string.slice(1).toLowerCase();
+
+exports.sanitizationRules = () => {
+	return [
+		body('firstName')
+			.exists()
+			.trim()
+			.customSanitizer(value => capitalize(value)),
+		body('lastName')
+			.exists()
+			.trim()
+			.customSanitizer(value => capitalize(value)),
+		body('email')
+			.exists()
+			.trim()
+			.withMessage('Hellooo, your email?')
+			.isEmail()
+			.withMessage('Valid email, please!'),
+		body('age')
+			.exists()
+			.toInt(),
+		body('fbw')
+			.exists()
+			.toInt(),
+		body('favoriteBands')
+			.exists()
+			.customSanitizer(value => {
+				return value.sort()
+			})
+	]
 }
 
-exports.capitalizeName = (req, res, next) => {
-	const capitalize = (string) => string[0].toUpperCase() + string.slice(1).toLowerCase();
-	
-	const user = req.body;
-	req.body = {...user, firstName: capitalize(user.firstName), lastName: capitalize(user.lastName)};
-	
-	next();
-}
+exports.sanitizationErrorHandling = (req, res, next) => {
+	const errors = validationResult(req);
 
-exports.sortFavBands = (req, res, next) => {
-	const user = req.body;
-	const favBands = [...user.favoriteBands];
-	req.body = {...user, favoriteBands: favBands.sort()};
+	if (errors.isEmpty()) return next();
 
-	next();
-}
-
-exports.numerizeAgeNClass = (req, res, next) => {
-	const user = req.body;
-	req.body = {...user, age: Number(user.age), fbw: Number(user.fbw)}
-
-	next();
+	res.status(422).json({ errors: errors.array() });
 }

@@ -1,32 +1,44 @@
-exports.validateProps = (req, res, next) => {
-	const user = req.body;
+const { body, validationResult } = require('express-validator');
 
-	if (user.firstName && user.lastName && user.age && user.fbw && user.email) next();
-	else {
-		const error = new Error('Your user is incomplete!');
-		error.status = 400;
-		next(error);
-	}
+
+exports.validationRules = () => {
+	return [
+		body('firstName')
+			.exists()
+			.withMessage('You need a first name'),
+		body('lastName')
+			.exists()
+			.withMessage('You need a last name'),
+		body('age')
+			.exists()
+			.withMessage('Age is required')
+			.isNumeric()
+			.withMessage('Age should be a number')
+			.custom(value => {
+				return Number(value) >= 18;
+			})
+			.withMessage('You are too young!'),
+		body('fbw')
+			.exists()
+			.withMessage('Which FBW are you in?')
+			.isNumeric()
+			.withMessage('FBW should be a number')
+			.custom(value => {
+				return Number(value) === 36;
+			})
+			.withMessage('You are not one of us!!'),
+		body('email')
+			.exists()
+			.withMessage('Hellooo, your email?')
+			.isEmail()
+			.withMessage('Valid email, please!')
+	]
 }
 
-exports.validateAge = (req, res, next) => {
-	const { age } = req.body;
+exports.validationErrorHandling = (req, res, next) => {
+	const errors = validationResult(req);
 
-	if (Number(age) >= 18) next();
-	else {
-		const error = new Error('We can not validate your user. They are  below 18 years of age');
-		error.status = 400;
-		next(error);
-	}
-}
+	if (errors.isEmpty()) return next();
 
-exports.validateFBW = (req, res, next) => {
-	const { fbw } = req.body;
-
-	if (Number(fbw) === 36) next();
-	else {
-		const error = new Error('We can not validate your user. They are not a member of FBW36');
-		error.status = 400;
-		next(error);
-	}
+	res.status(422).json({ errors: errors.array() });
 }
