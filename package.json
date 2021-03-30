@@ -1,0 +1,21 @@
+{
+  "name": "muhasin",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.17.1",
+    "express-router": "0.0.1",
+    "express-validator": "^6.10.0",
+    "init": "^0.1.2"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon server.js --ignore data/"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}
